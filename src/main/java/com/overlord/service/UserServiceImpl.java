@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
 			return user;
 		} 
 		
-		return new User();		
+		return user;		
 	}
 
 	public boolean findByUserName(String userName) {
