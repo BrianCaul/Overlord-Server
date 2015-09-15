@@ -21,13 +21,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public User findByLogin(String userName, String password) {	
-		User user = userRepository.findByUserName(userName);
+		User user = userRepository.findByUserName(userName);		
 		
-		if(user != null && user.getPassword().equals(password)) {
+		if(password.contentEquals(user.getPassword())){
 			return user;
-		} 
+		}
 		
-		return user;		
+		return new User();		
 	}
 
 	public boolean findByUserName(String userName) {

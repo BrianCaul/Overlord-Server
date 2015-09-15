@@ -27,7 +27,7 @@ public class VenueServiceImpl implements VenueService {
 			return venue;
 		} 
 		
-		return new Venue();		
+		return venue;		
 	}
 
 

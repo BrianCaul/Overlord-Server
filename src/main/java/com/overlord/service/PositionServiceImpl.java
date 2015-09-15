@@ -27,7 +27,7 @@ public class PositionServiceImpl implements PositionService {
 			return position;
 		} 
 		
-		return new Position();		
+		return position;		
 	}
 
 

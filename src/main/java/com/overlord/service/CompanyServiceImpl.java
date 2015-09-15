@@ -31,7 +31,7 @@ public class CompanyServiceImpl implements CompanyService {
 			return company;
 		} 
 		
-		return new Company();		
+		return company;		
 	}
 
 

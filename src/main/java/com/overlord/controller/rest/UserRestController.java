@@ -86,7 +86,7 @@ public class UserRestController {
 			@RequestParam("userType") String userType,
 			@RequestParam("password") String password,
 			@RequestParam("username") String userName,
-			@RequestParam("companyId") String companyId) {
+			@RequestParam(value="companyId", required = false) String companyId) {
 
 		User user = new User();
 		if (userService.findByUserName(userName)) {
@@ -95,7 +95,9 @@ public class UserRestController {
 		} else {
 
 			try {
-				user.setCompany(companyService.findByCompanyId(companyId));
+				if(companyId !=null && !companyId.isEmpty()){
+					user.setCompany(companyService.findByCompanyId(companyId));
+				}
 				user.setPhone(phone);
 				user.setEmail(email);
 				user.setName(name);
@@ -119,6 +121,7 @@ public class UserRestController {
 			User user = new User();
 			try {
 				user = userService.findByLogin(userName, password);
+				user.setUsersCompanyID(user.getCompany().getId());
 			} catch (Exception e) {
 				String sMessage = "Error logging in user";
 				return user;

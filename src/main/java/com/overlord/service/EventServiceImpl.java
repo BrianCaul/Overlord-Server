@@ -30,7 +30,7 @@ public class EventServiceImpl implements EventService {
 			return event;
 		} 
 		
-		return new Event();		
+		return event;		
 	}
 
 

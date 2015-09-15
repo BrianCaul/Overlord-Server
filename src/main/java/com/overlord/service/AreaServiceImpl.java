@@ -27,7 +27,7 @@ public class AreaServiceImpl implements AreaService {
 			return area;
 		} 
 		
-		return new Area();		
+		return area;		
 	}
 
 

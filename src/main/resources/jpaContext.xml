@@ -46,9 +46,9 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url"
-			value="jdbc:mysql://mysql103235-overlord.j.layershift.co.uk:3306/overlord?autoReconnect=true&amp;createDatabaseIfNotExist=true&amp;" />
-		<property name="username" value="root" />
-		<property name="password" value="ENQgil64185" />
+			value="jdbc:mysql://phpmyadmin.cf4sgq3bubye.ap-southeast-2.rds.amazonaws.com:3306/overlord?autoReconnect=true&amp;createDatabaseIfNotExist=true&amp;" />
+		<property name="username" value="phpMyAdmin" />
+		<property name="password" value="phpMyAdmin" />
 	</bean>
 
 	<!-- Configures view for returning JSON to the client -->

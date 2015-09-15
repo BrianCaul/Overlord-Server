@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -53,6 +54,9 @@ public class User {
 	@ManyToOne(fetch=FetchType.EAGER)  
     @JoinColumn(name="positionid")
 	private Position position;
+	
+	@Transient
+	private int usersCompanyID;
 	
 	 public User() {       
 
@@ -175,5 +179,19 @@ public class User {
 	 */
 	public void setPosition(Position position) {
 		this.position = position;
-	}	
+	}
+
+	/**
+	 * @return the usersCompanyID
+	 */
+	public int getUsersCompanyID() {
+		return usersCompanyID;
+	}
+
+	/**
+	 * @param usersCompanyID the usersCompanyID to set
+	 */
+	public void setUsersCompanyID(int usersCompanyID) {
+		this.usersCompanyID = usersCompanyID;
+	}
 }
