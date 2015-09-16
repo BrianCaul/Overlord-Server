@@ -25,7 +25,7 @@ public class User {
 	private int id;
 	
 	@NotEmpty
-	@Size(min=4, max=20)
+	@Size(min=1, max=20)
 	private String userName;
 	
 	@NotEmpty
@@ -38,7 +38,7 @@ public class User {
 	private String userType;
 	
 	@NotEmpty
-	@Size(min=4, max=8)
+	@Size(min=1, max=20)
 	private String password;
 	
 	@NotEmpty
