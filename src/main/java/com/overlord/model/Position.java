@@ -29,15 +29,15 @@ public class Position {
 	private int id;
 	
 	@NotEmpty
-	@Size(min=4, max=45)
+	@Size(min=1, max=45)
 	private String positionName;
 	
 	@NotEmpty
-	@Size(min=2, max=45)
+	@Size(min=1, max=45)
 	private String positionFunction;
 	
 	@NotEmpty
-	@Size(min=2, max=45)
+	@Size(min=1, max=45)
 	private String positionType;
 	
 	@org.codehaus.jackson.annotate.JsonIgnore

@@ -29,7 +29,7 @@ public class Area {
 	private int id;
 	
 	@NotEmpty
-	@Size(min=4, max=45)
+	@Size(min=1, max=45)
 	private String areaName;
 	
 	@NotNull

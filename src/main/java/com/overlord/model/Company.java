@@ -31,19 +31,19 @@ public class Company implements Serializable{
 	private int id;
 	
 	@NotEmpty
-	@Size(min=4, max=45)
+	@Size(min=1, max=45)
 	private String name;
 	
 	@NotEmpty
-	@Size(min=4, max=255)
+	@Size(min=1, max=255)
 	private String address;
 	
 	@NotEmpty
-	@Size(min=4, max=45)
+	@Size(min=1, max=45)
 	private String registrationNumber;
 	
 	@NotEmpty
-	@Size(min=4, max=255)
+	@Size(min=1, max=255)
 	private String contactDetail;
 	
 	@JsonUnwrapped
