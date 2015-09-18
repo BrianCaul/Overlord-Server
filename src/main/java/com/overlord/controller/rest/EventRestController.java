@@ -1,9 +1,14 @@
 package com.overlord.controller.rest;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -104,19 +109,24 @@ public class EventRestController {
 			@RequestParam(value="reset", required = false) String reset) {
 
 		Event event = new Event();
-		
+
 			try {
-				SimpleDateFormat dateformat = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-				Date startDate = dateformat.parse(start);
-				Date endDate = dateformat.parse(start);
+				start = start +":01.000Z";
+				end = end + ":01.000Z";
+				
+				DateTimeFormatter parser = ISODateTimeFormat.dateTime();
+		        DateTime startDateTime = parser.parseDateTime(start);
+		        DateTime endDateTime = parser.parseDateTime(end);
+
+				
 				
 				event.setEventName(eventName);
 				event.setCapacity(Integer.parseInt(capacity));
-				event.setStart(startDate);
-				event.setEnd(endDate);
+				event.setStart(startDateTime.toDate());
+				event.setEnd(endDateTime.toDate());
 				if(reset!=null){
-					Date resetDate = dateformat.parse(reset);
-					event.setReset(resetDate);
+					 DateTime resetDateTime = parser.parseDateTime(start);
+					event.setReset(resetDateTime.toDate());
 				}
 				event.setEventName(eventName);
 				event.setCompany(companyService.findByCompanyId(companyId));
