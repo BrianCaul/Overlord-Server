@@ -1,6 +1,8 @@
 package com.overlord.model;
 
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -8,7 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -34,11 +39,18 @@ public class User {
 	@NotEmpty
 	private String phone;
 	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastLogin = new Date();
+	
+	private String avatar ="img/noavatar.png";
+	
+	private String enabled = "true";
+	
 	@NotEmpty
 	private String userType;
 	
 	@NotEmpty
-	@Size(min=1, max=20)
+	@Size(min=1, max=25)
 	private String password;
 	
 	@NotEmpty
@@ -193,5 +205,29 @@ public class User {
 	 */
 	public void setUsersCompanyID(int usersCompanyID) {
 		this.usersCompanyID = usersCompanyID;
+	}
+
+	public Date getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
+	public String getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(String enabled) {
+		this.enabled = enabled;
 	}
 }
