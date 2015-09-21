@@ -35,6 +35,9 @@ public class Event {
 	@Size(min=1, max=45)
 	private String eventName;
 	
+	@Size(max=255)
+	private String description;
+	
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date start;
@@ -185,6 +188,20 @@ public class Event {
 	 */
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	

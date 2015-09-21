@@ -102,6 +102,7 @@ public class EventRestController {
 	@RequestMapping(value = "/rest/events", method = RequestMethod.POST)
 	public  @ResponseBody Event createEvent(
 			@RequestParam("eventName") String eventName,
+			@RequestParam(value="description", required = false) String description,
 			@RequestParam("companyId") String companyId,
 			@RequestParam("capacity") String capacity,
 			@RequestParam("start") String start,
@@ -124,9 +125,12 @@ public class EventRestController {
 				event.setCapacity(Integer.parseInt(capacity));
 				event.setStart(startDateTime.toDate());
 				event.setEnd(endDateTime.toDate());
-				if(reset!=null){
+				if(reset != null){
 					 DateTime resetDateTime = parser.parseDateTime(start);
 					event.setReset(resetDateTime.toDate());
+				}
+				if(description != null){
+					event.setDescription(description);
 				}
 				event.setEventName(eventName);
 				event.setCompany(companyService.findByCompanyId(companyId));
@@ -143,6 +147,7 @@ public class EventRestController {
 	@RequestMapping(value = "/rest/events/{id}", method = RequestMethod.POST)
 	public @ResponseBody Event updateEvent(@PathVariable String id,
 			@RequestParam("eventName") String eventName,
+			@RequestParam(value="description", required = false) String description,
 			@RequestParam("companyId") String companyId,
 			@RequestParam("capacity") String capacity,
 			@RequestParam("start") String start,
@@ -151,18 +156,23 @@ public class EventRestController {
 
 		Event event = new Event();
 		try {
-			SimpleDateFormat dateformat = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-			Date startDate = dateformat.parse(start);
-			Date endDate = dateformat.parse(start);
+			start = start +":01.000Z";
+			end = end + ":01.000Z";
 			
-			event = eventService.findByEventId(id);
+			DateTimeFormatter parser = ISODateTimeFormat.dateTime();
+	        DateTime startDateTime = parser.parseDateTime(start);
+	        DateTime endDateTime = parser.parseDateTime(end);
+
 			event.setEventName(eventName);
 			event.setCapacity(Integer.parseInt(capacity));
-			event.setStart(startDate);
-			event.setEnd(endDate);
-			if(reset!=null){
-				Date resetDate = dateformat.parse(reset);
-				event.setReset(resetDate);
+			event.setStart(startDateTime.toDate());
+			event.setEnd(endDateTime.toDate());
+			if(reset != null){
+				 DateTime resetDateTime = parser.parseDateTime(start);
+				event.setReset(resetDateTime.toDate());
+			}
+			if(description != null){
+				event.setDescription(description);
 			}
 			event.setEventName(eventName);
 			event.setCompany(companyService.findByCompanyId(companyId));
