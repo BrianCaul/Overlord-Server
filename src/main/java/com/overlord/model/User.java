@@ -70,6 +70,9 @@ public class User {
 	@Transient
 	private int usersCompanyID;
 	
+	@Transient
+	private int usersPositionID;
+	
 	 public User() {       
 
 	 }
@@ -229,5 +232,18 @@ public class User {
 
 	public void setEnabled(String enabled) {
 		this.enabled = enabled;
+	
+	/**
+	 * @return the userssPositionID
+	 */
+	public int getUsersPositionID() {
+		return usersPositionID;
+	}
+
+	/**
+	 * @param userssPositionID the userssPositionID to set
+	 */
+	public void setUsersPositionID(int usersPositionID) {
+		this.usersPositionID = usersPositionID;
 	}
 }
