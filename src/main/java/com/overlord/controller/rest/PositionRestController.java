@@ -131,7 +131,8 @@ public class PositionRestController {
 	}
 	
 	@RequestMapping(value = "/rest/positions/{id}/enter", method = RequestMethod.POST)
-	public @ResponseBody String enterPosition(@PathVariable String id) {
+	public @ResponseBody String enterPosition(@PathVariable String id, 
+			@RequestParam("numVisitors") String numVisitors) {
 
 		Position position = new Position();
 		try {
@@ -140,11 +141,10 @@ public class PositionRestController {
 			if(position.getPositionFunction().contentEquals("Out")){
 				return "Exit Only";
 			}
-			int count = position.getNumVisitors();
-			if(count < position.getArea().getCapacity()){
-				count++;
-			}else{
-				return "No more room in area";
+			int count = 0;
+			count = count + Integer.parseInt(numVisitors);
+			if(count > position.getArea().getCapacity()){
+				return "Area is full";
 			}
 			position.setNumVisitors(count);
 			position = positionService.updatePosition(position);
@@ -157,7 +157,8 @@ public class PositionRestController {
 	}
 	
 	@RequestMapping(value = "/rest/positions/{id}/exit", method = RequestMethod.POST)
-	public @ResponseBody String exitPosition(@PathVariable String id) {
+	public @ResponseBody String exitPosition(@PathVariable String id, 
+			@RequestParam("numVisitors") String numVisitors) {
 
 		Position position = new Position();
 		try {
@@ -166,13 +167,8 @@ public class PositionRestController {
 			if(position.getPositionFunction().contentEquals("In")){
 				return "Entrance Only";
 			}
-			int count = position.getNumVisitors();
-			if(count > 0){
-				count--;
-			}
-			else{
-				return "No people left in area";
-			}
+			int count = 0;
+			count = count + Integer.parseInt(numVisitors);
 			position.setNumVisitors(count);
 			position = positionService.updatePosition(position);
 		} catch (Exception e) {
