@@ -17,10 +17,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 
 import com.overlord.model.Position;
+import com.overlord.model.Stat;
 import com.overlord.service.AreaService;
 import com.overlord.service.CompanyService;
 import com.overlord.service.EventService;
 import com.overlord.service.PositionService;
+import com.overlord.service.StatService;
 import com.overlord.service.VenueService;
 @Controller
 @SessionAttributes("position")
@@ -34,6 +36,8 @@ public class PositionRestController {
 
 	@Autowired
 	private AreaService areaService;
+	
+	@Autowired StatService statService;
 	
 	@Autowired
 	private View jsonView;
@@ -148,6 +152,13 @@ public class PositionRestController {
 			}
 			position.setNumVisitors(count);
 			position = positionService.updatePosition(position);
+			
+			//Stats
+			int eventId = position.getArea().getVenue().getEvent().getId();
+			int companyId = position.getArea().getVenue().getEvent().getCompany().getId();
+			Stat stat = new Stat("Entry", eventId, companyId);
+			statService.save(stat);
+			
 		} catch (Exception e) {
 			String sMessage = "Error registering an entry";
 			return sMessage;
@@ -171,6 +182,13 @@ public class PositionRestController {
 			count = count + Integer.parseInt(numVisitors);
 			position.setNumVisitors(count);
 			position = positionService.updatePosition(position);
+			
+			//Stats
+			int eventId = position.getArea().getVenue().getEvent().getId();
+			int companyId = position.getArea().getVenue().getEvent().getCompany().getId();
+			Stat stat = new Stat("Exit", eventId, companyId);
+			statService.save(stat);
+			
 		} catch (Exception e) {
 			String sMessage = "Error registering an exit";
 			return sMessage;
