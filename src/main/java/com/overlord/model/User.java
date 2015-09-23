@@ -232,6 +232,7 @@ public class User {
 
 	public void setEnabled(String enabled) {
 		this.enabled = enabled;
+	}
 	
 	/**
 	 * @return the userssPositionID

@@ -16,9 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 
 import com.overlord.model.Area;
+import com.overlord.model.Position;
 import com.overlord.service.AreaService;
 import com.overlord.service.CompanyService;
 import com.overlord.service.EventService;
+import com.overlord.service.PositionService;
 import com.overlord.service.VenueService;
 @Controller
 @SessionAttributes("area")
@@ -29,6 +31,9 @@ public class AreaRestController {
 	
 	@Autowired
 	private VenueService venueService;
+	
+	@Autowired
+	private PositionService positionService;
 
 	@Autowired
 	private View jsonView;
@@ -110,6 +115,59 @@ public class AreaRestController {
 			area = areaService.findByAreaId(id);
 			area.setAreaName(areaName);
 			area.setCapacity(Integer.parseInt(capacity));
+			area = areaService.updateArea(area);
+		} catch (Exception e) {
+			String sMessage = "Error updating area";
+			return area;
+		}
+
+		return area;
+	}
+	
+	@RequestMapping(value = "/rest/areas/{id}/updateNumbers", method = RequestMethod.POST)
+	public @ResponseBody Area updateAreaNumbers(@PathVariable String id,
+			@RequestParam("numVisitors") String numVisitors) {
+
+		Area area = new Area();
+		try {
+			int changedAmount = 0;
+			changedAmount = changedAmount + Integer.parseInt(numVisitors);
+			area = areaService.findByAreaId(id);
+			int totalAmount = 0;
+			for(Position position: area.getPositions()){
+				totalAmount =totalAmount+ position.getNumVisitors();
+			}
+			
+			if(totalAmount > changedAmount){
+				//Reduced 
+				int decrease = totalAmount - changedAmount;
+				for(Position position: area.getPositions()){
+					while(decrease >0){
+						//remove from door one at a time
+						int nums = position.getNumVisitors();
+						if(nums > 0){
+							position.setNumVisitors(nums-1);
+							decrease--;
+						}else{
+							break;
+						}
+					}
+					//Update position
+					positionService.updatePosition(position);
+				}
+			}else if(totalAmount < changedAmount){
+				//Increased
+				int increase = changedAmount - totalAmount;
+				for(Position position: area.getPositions()){
+					if(!"Exit".contentEquals(position.getPositionFunction())){
+						position.setNumVisitors(position.getNumVisitors() + increase);
+						//Update position
+						positionService.updatePosition(position);
+						break;
+					}
+				}
+			}
+
 			area = areaService.updateArea(area);
 		} catch (Exception e) {
 			String sMessage = "Error updating area";
