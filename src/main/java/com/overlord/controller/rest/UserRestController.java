@@ -122,7 +122,9 @@ public class UserRestController {
 			try {
 				user = userService.findByLogin(userName, password);
 				user.setUsersCompanyID(user.getCompany().getId());
-				user.setUsersPositionID(user.getPosition().getId());
+				if(user.getPosition().getId() > 0){
+					user.setUsersPositionID(user.getPosition().getId());
+				}
 			} catch (Exception e) {
 				String sMessage = "Error logging in user";
 				return user;

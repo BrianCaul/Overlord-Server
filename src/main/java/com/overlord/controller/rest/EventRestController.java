@@ -40,10 +40,10 @@ public class EventRestController {
 
 
 	@RequestMapping(value = "/rest/events", method = RequestMethod.GET)
-	public @ResponseBody List<Event> getAllEvents() {
+	public @ResponseBody List<Event> getAllEvents(@RequestParam(value="companyId", required = true) String companyId) {
 		List<Event> events = null;
 		try {
-			events = eventService.getAllEvents();
+			events = eventService.getAllEvents(companyId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

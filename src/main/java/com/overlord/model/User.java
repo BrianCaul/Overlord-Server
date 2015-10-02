@@ -186,6 +186,9 @@ public class User {
 	 * @return the position
 	 */
 	public Position getPosition() {
+		if(position ==null){
+			return new Position();
+		}
 		return position;
 	}
 

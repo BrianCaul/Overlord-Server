@@ -8,7 +8,7 @@ import com.overlord.model.Event;
 public interface EventService {
 	Event save(Event event);
 	Event findByName(String name);
-	List<Event> getAllEvents();
+	List<Event> getAllEvents(String companyId);
 	void deleteEvent(String id);
 	Event createEvent(Event event);
 	Event findByEventId(String id);

@@ -34,8 +34,8 @@ public class EventServiceImpl implements EventService {
 	}
 
 
-	public List<Event> getAllEvents() {
-		return eventRepository.findAll();
+	public List<Event> getAllEvents(String id) {
+		return eventRepository.findCompanyEvents(Integer.parseInt(id));
 	}
 	
 	@Transactional
