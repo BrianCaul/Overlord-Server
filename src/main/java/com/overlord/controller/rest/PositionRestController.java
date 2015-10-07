@@ -18,17 +18,22 @@ import org.springframework.web.servlet.View;
 
 import com.overlord.model.Position;
 import com.overlord.model.Stat;
+import com.overlord.model.Visitor;
 import com.overlord.service.AreaService;
 import com.overlord.service.CompanyService;
 import com.overlord.service.EventService;
 import com.overlord.service.PositionService;
 import com.overlord.service.StatService;
+import com.overlord.service.VisitorService;
 @Controller
 @SessionAttributes("position")
 public class PositionRestController {
 
 	@Autowired
 	private PositionService positionService;
+	
+	@Autowired
+	private VisitorService visitorService;
 	
 	@Autowired
 	private EventService eventService;
@@ -134,27 +139,29 @@ public class PositionRestController {
 	}
 	
 	@RequestMapping(value = "/rest/positions/{id}/enter", method = RequestMethod.POST)
-	public @ResponseBody String enterPosition(@PathVariable String id, 
-			@RequestParam("numVisitors") String numVisitors) {
+	public @ResponseBody String enterPosition(@PathVariable String id) {
 
 		Position position = new Position();
 		try {
 			
 			position = positionService.findByPositionId(id);
-			if(position.getPositionFunction().contentEquals("Out")){
+			if(position.getPositionFunction().contentEquals("Exit Only")){
 				return "Exit Only";
 			}
-			int count = 0;
-			count = count + Integer.parseInt(numVisitors);
-			if(count > position.getArea().getCapacity()){
+			
+			//Get Count of areas visitors
+			if(position.getArea().getVisitors().size() >= position.getArea().getCapacity()){
 				return "Area is full";
 			}
-			position.setNumVisitors(count);
-			position = positionService.updatePosition(position);
 			
 			//Stats
 			int eventId = position.getArea().getEvent().getId();
 			int companyId = position.getArea().getEvent().getCompany().getId();
+			Visitor visitor = new Visitor();
+			visitor.setExited("false");
+			visitor.setPosition(position);
+			visitorService.createVisitor(visitor);
+			
 			Stat stat = new Stat("Entry", eventId, companyId);
 			statService.save(stat);
 			
@@ -167,19 +174,22 @@ public class PositionRestController {
 	}
 	
 	@RequestMapping(value = "/rest/positions/{id}/exit", method = RequestMethod.POST)
-	public @ResponseBody String exitPosition(@PathVariable String id, 
-			@RequestParam("numVisitors") String numVisitors) {
+	public @ResponseBody String exitPosition(@PathVariable String id) {
 
 		Position position = new Position();
 		try {
 			
 			position = positionService.findByPositionId(id);
-			if(position.getPositionFunction().contentEquals("In")){
+			if(position.getPositionFunction().contentEquals("Entry Only")){
 				return "Entrance Only";
 			}
-			int count = 0;
-			count = count + Integer.parseInt(numVisitors);
-			position.setNumVisitors(count);
+			
+			//Delete a visitor from the area if there are any left
+			if(position.getArea().getVisitors().size() == 0){
+				return "No visitors left in area";
+			}
+			Visitor visitor = position.getArea().getVisitors().remove(0);
+			visitorService.deleteVisitor(String.valueOf(visitor.getId()));	
 			position = positionService.updatePosition(position);
 			
 			//Stats

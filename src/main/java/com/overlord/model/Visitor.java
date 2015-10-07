@@ -27,7 +27,6 @@ public class Visitor {
 	@GeneratedValue
 	private int id;
 	
-	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date entryTime;
 	

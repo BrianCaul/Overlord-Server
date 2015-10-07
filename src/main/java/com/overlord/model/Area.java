@@ -1,5 +1,7 @@
 package com.overlord.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -131,6 +133,14 @@ public class Area {
 	 */
 	public void setEvent(Event event) {
 		this.event = event;
+	}
+	
+	public List<Visitor> getVisitors(){
+		List<Visitor> visitors = new ArrayList<Visitor>();
+		for(Position position: this.positions){
+			visitors.addAll(position.getVisitors());
+		}
+		return visitors;
 	}
 	
 	
