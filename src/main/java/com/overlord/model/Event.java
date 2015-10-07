@@ -59,7 +59,7 @@ public class Event {
 	
 	@Fetch(FetchMode.JOIN)
 	@OneToMany(mappedBy="event")
-    private Set<Venue> venues;	
+    private Set<Area> areas;	
 	
 
 	public Event(){
@@ -121,17 +121,17 @@ public class Event {
 	}
 
 	/**
-	 * @return the venues
+	 * @return the areas
 	 */
-	public Set<Venue> getVenues() {
-		return venues;
+	public Set<Area> getAreas() {
+		return areas;
 	}
 
 	/**
-	 * @param venues the venues to set
+	 * @param areas the areas to set
 	 */
-	public void setVenues(Set<Venue> venues) {
-		this.venues = venues;
+	public void setAreas(Set<Area> areas) {
+		this.areas = areas;
 	}
 
 	/**

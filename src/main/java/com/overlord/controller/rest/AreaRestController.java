@@ -21,7 +21,6 @@ import com.overlord.service.AreaService;
 import com.overlord.service.CompanyService;
 import com.overlord.service.EventService;
 import com.overlord.service.PositionService;
-import com.overlord.service.VenueService;
 @Controller
 @SessionAttributes("area")
 public class AreaRestController {
@@ -30,7 +29,7 @@ public class AreaRestController {
 	private AreaService areaService;
 	
 	@Autowired
-	private VenueService venueService;
+	private EventService eventService;
 	
 	@Autowired
 	private PositionService positionService;
@@ -86,13 +85,13 @@ public class AreaRestController {
 	public @ResponseBody Area createArea(
 			@RequestParam("areaName") String areaName,
 			@RequestParam("capacity") String capacity,
-			@RequestParam("venueId") String venueId) {
+			@RequestParam("eventId") String eventId) {
 
 		Area area = new Area();
 			try {
 				area.setAreaName(areaName);
 				area.setCapacity(Integer.parseInt(capacity));
-				area.setVenue(venueService.findByVenueId(venueId));
+				area.setEvent(eventService.findByEventId(eventId));
 			
 				area = areaService.createArea(area);
 			} catch (Exception e) {

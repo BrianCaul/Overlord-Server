@@ -23,7 +23,6 @@ import com.overlord.service.CompanyService;
 import com.overlord.service.EventService;
 import com.overlord.service.PositionService;
 import com.overlord.service.StatService;
-import com.overlord.service.VenueService;
 @Controller
 @SessionAttributes("position")
 public class PositionRestController {
@@ -32,7 +31,7 @@ public class PositionRestController {
 	private PositionService positionService;
 	
 	@Autowired
-	private VenueService venueService;
+	private EventService eventService;
 
 	@Autowired
 	private AreaService areaService;
@@ -154,8 +153,8 @@ public class PositionRestController {
 			position = positionService.updatePosition(position);
 			
 			//Stats
-			int eventId = position.getArea().getVenue().getEvent().getId();
-			int companyId = position.getArea().getVenue().getEvent().getCompany().getId();
+			int eventId = position.getArea().getEvent().getId();
+			int companyId = position.getArea().getEvent().getCompany().getId();
 			Stat stat = new Stat("Entry", eventId, companyId);
 			statService.save(stat);
 			
@@ -184,8 +183,8 @@ public class PositionRestController {
 			position = positionService.updatePosition(position);
 			
 			//Stats
-			int eventId = position.getArea().getVenue().getEvent().getId();
-			int companyId = position.getArea().getVenue().getEvent().getCompany().getId();
+			int eventId = position.getArea().getEvent().getId();
+			int companyId = position.getArea().getEvent().getCompany().getId();
 			Stat stat = new Stat("Exit", eventId, companyId);
 			statService.save(stat);
 			

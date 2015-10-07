@@ -37,8 +37,8 @@ public class Area {
 	
 	@org.codehaus.jackson.annotate.JsonIgnore
 	@ManyToOne(fetch=FetchType.EAGER)  
-    @JoinColumn(name="venueid")
-	private Venue venue;
+    @JoinColumn(name="eventid")
+	private Event event;
 	
 	@Fetch(FetchMode.JOIN)
 	@OneToMany(mappedBy="area")
@@ -120,17 +120,17 @@ public class Area {
 	}
 
 	/**
-	 * @return the venue
+	 * @return the event
 	 */
-	public Venue getVenue() {
-		return venue;
+	public Event getEvent() {
+		return event;
 	}
 
 	/**
-	 * @param venue the venue to set
+	 * @param event the event to set
 	 */
-	public void setVenue(Venue venue) {
-		this.venue = venue;
+	public void setEvent(Event event) {
+		this.event = event;
 	}
 	
 	

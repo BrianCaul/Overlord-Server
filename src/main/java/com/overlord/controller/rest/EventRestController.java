@@ -22,7 +22,6 @@ import org.springframework.web.servlet.View;
 import com.overlord.model.Area;
 import com.overlord.model.Event;
 import com.overlord.model.Position;
-import com.overlord.model.Venue;
 import com.overlord.service.CompanyService;
 import com.overlord.service.EventService;
 @Controller
@@ -86,12 +85,9 @@ public class EventRestController {
 		}
 		int countVisitors = 0;
 
-		for (Venue venue : event.getVenues()) {
-
-			for (Area area : venue.getAreas()) {
-				for (Position position : area.getPositions()) {
-					countVisitors = position.getNumVisitors();
-				}
+		for (Area area : event.getAreas()) {
+			for (Position position : area.getPositions()) {
+				countVisitors = position.getNumVisitors();
 			}
 		}
 		
