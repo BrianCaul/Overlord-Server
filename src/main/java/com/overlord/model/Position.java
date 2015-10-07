@@ -49,6 +49,10 @@ public class Position {
 	@OneToMany(mappedBy="position")
     private Set<User> attendants;
 	
+	@Fetch(FetchMode.JOIN)
+	@OneToMany(mappedBy="position")
+    private Set<Visitor> visitors;	
+	
 	
 	@NotNull
     private int numVisitors;
@@ -167,6 +171,20 @@ public class Position {
 	 */
 	public void setAttendants(Set<User> attendants) {
 		this.attendants = attendants;
+	}
+
+	/**
+	 * @return the visitors
+	 */
+	public Set<Visitor> getVisitors() {
+		return visitors;
+	}
+
+	/**
+	 * @param visitors the visitors to set
+	 */
+	public void setVisitors(Set<Visitor> visitors) {
+		this.visitors = visitors;
 	}
 	
 	
