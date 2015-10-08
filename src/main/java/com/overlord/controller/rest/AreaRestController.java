@@ -145,7 +145,7 @@ public class AreaRestController {
 						//remove from door one at a time
 						int nums = position.getNumVisitors();
 						if(nums > 0){
-							position.setNumVisitors(nums-1);
+							//position.setNumVisitors(nums-1);
 							decrease--;
 						}else{
 							break;
@@ -159,7 +159,7 @@ public class AreaRestController {
 				int increase = changedAmount - totalAmount;
 				for(Position position: area.getPositions()){
 					if(!"Exit".contentEquals(position.getPositionFunction())){
-						position.setNumVisitors(position.getNumVisitors() + increase);
+						//position.setNumVisitors(position.getNumVisitors() + increase);
 						//Update position
 						positionService.updatePosition(position);
 						break;

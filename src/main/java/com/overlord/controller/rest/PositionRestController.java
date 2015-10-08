@@ -1,9 +1,11 @@
 package com.overlord.controller.rest;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -81,6 +83,7 @@ public class PositionRestController {
 		Position position = new Position();
 		try {
 			position = positionService.findByPositionId(id);
+			position.setNumVisitors();
 		} catch (Exception e) {
 			String sMessage = "Error invoking find position by id";
 			return position;
@@ -103,7 +106,6 @@ public class PositionRestController {
 				position.setPositionName(positionName);
 				position.setPositionType(positionType);
 				position.setPositionFunction(positionFunction);
-				position.setNumVisitors(0);
 				position.setArea(areaService.findByAreaId(areaId));
 			
 				position = positionService.createPosition(position);
@@ -153,13 +155,14 @@ public class PositionRestController {
 			if(position.getArea().getVisitors().size() >= position.getArea().getCapacity()){
 				return "Area is full";
 			}
-			
+			Date dateTime = new Date();
 			//Stats
 			int eventId = position.getArea().getEvent().getId();
 			int companyId = position.getArea().getEvent().getCompany().getId();
 			Visitor visitor = new Visitor();
 			visitor.setExited("false");
 			visitor.setPosition(position);
+			visitor.setEntryTime(dateTime);
 			visitorService.createVisitor(visitor);
 			
 			Stat stat = new Stat("Entry", eventId, companyId);
@@ -190,7 +193,6 @@ public class PositionRestController {
 			}
 			Visitor visitor = position.getArea().getVisitors().remove(0);
 			visitorService.deleteVisitor(String.valueOf(visitor.getId()));	
-			position = positionService.updatePosition(position);
 			
 			//Stats
 			int eventId = position.getArea().getEvent().getId();

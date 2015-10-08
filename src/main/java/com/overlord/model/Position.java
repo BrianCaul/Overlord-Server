@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import javax.persistence.Table;
 
@@ -53,8 +54,7 @@ public class Position {
 	@OneToMany(mappedBy="position")
     private Set<Visitor> visitors;	
 	
-	
-	@NotNull
+	@Transient
     private int numVisitors;
 	
 
@@ -149,14 +149,14 @@ public class Position {
 	 * @return the numVisitors
 	 */
 	public int getNumVisitors() {
-		return numVisitors;
+		return this.area.getVisitors().size();
 	}
-
+	
 	/**
-	 * @param numVisitors the numVisitors to set
+	 * @return the numVisitors
 	 */
-	public void setNumVisitors(int numVisitors) {
-		this.numVisitors = numVisitors;
+	public void setNumVisitors() {
+		this.numVisitors = this.area.getVisitors().size();
 	}
 
 	/**
