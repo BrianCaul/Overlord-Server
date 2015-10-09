@@ -15,7 +15,7 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
 	@Query("select e from Event e where e.eventName = :eventName")
 	Event findByName(@Param("eventName") String eventName);
 	
-	@Query("select e from Event e where e.company.id = :companyId")
+	@Query("select e from Event e where e.company.id = :companyId order by e.id asc")
 	List<Event> findCompanyEvents(@Param("companyId") int companyId);
 
 	

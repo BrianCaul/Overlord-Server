@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +37,8 @@ public class CompanyServiceImpl implements CompanyService {
 
 
 	public List<Company> getAllCompanies() {
-		return companyRepository.findAll();
+		Sort sort =new Sort(Sort.Direction.ASC, "id");
+		return companyRepository.findAll(sort);
 	}
 	
 	@Transactional
